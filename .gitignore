@@ -1,0 +1,10 @@
+*.pyc
+**/*.pyc
+.eggs/
+.tox/
+**/*.egg-info/
+env/
+dist/
+.project
+.pydevproject
+.metadata/
