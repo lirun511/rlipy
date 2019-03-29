@@ -5,7 +5,9 @@ import dateutil.rrule as dr
 import dateutil.relativedelta as drel
 import pandas as pd
 import logging
-class TradeDate(object):
+def today():
+    return datetime.datetime.strftime(datetime.datetime.now(), '%Y%m%d')
+class TradeDate(object):      
     def __init__(self, market='NOHOLIDAY'):
         self.holidays = set()
         self.weekend = [5,6]
