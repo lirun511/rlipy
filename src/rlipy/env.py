@@ -16,7 +16,7 @@ if(IS_WINDOWS):
     DATA_DIR = 'R:'
 else:
     DATA_DIR = '/data'
-if(os.environ.has_key('PYTHONTEST') and os.environ['PYTHONTEST']=='1'):
+if('PYTHONTEST' in os.environ and os.environ['PYTHONTEST']=='1'):
     DATA_DIR = DATA_DIR+'/common/rli/testdata'
 
 ROOT_DIR = DATA_DIR+'/prod/infra'

@@ -9,7 +9,7 @@ import subprocess
 import logging
 import os
 import uuid
-import env
+import rlipy.env as env
 import time
 import datetime
 
