@@ -14,10 +14,10 @@ class zreq(object):
         self.zpoller.register(self.socket, zmq.POLLIN)
     
     def requestAndReply(self, outMsg, timeout):
-        self.socket.send(outMsg)
+        self.socket.send(outMsg.encode('ascii'))
         events = dict(self.zpoller.poll(timeout))
         if(self.socket in events and events[self.socket]==zmq.POLLIN):
-            msg = self.socket.recv()
+            msg = self.socket.recv().decode('ascii')
             return msg
         self.reset()
         return ""

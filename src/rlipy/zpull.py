@@ -15,7 +15,7 @@ class zpull(object):
     
     def recv(self):
         try:
-            msg = self.socket.recv()
+            msg = self.socket.recv().decode('ascii')
             return msg
         except zmq.Again as e:
             return None

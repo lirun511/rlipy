@@ -72,16 +72,20 @@ class ExcelServer(object):
     def loop(self):
         now = datetime.now()
         while now < self.endTime:
+            #logging.debug("start loop")
             self.pollClients()
+            #logging.debug("polled client")
             self.pollPriceFeeds()
+            #logging.debug("polled feeds")
             self.sleepIfNoNewData()
+            #logging.debug("week up")
             now = datetime.now()
 
     def pollClients(self):
         self.clientMsg = self.subSocket.recv()
         while(self.clientMsg):
             logging.debug("recv msg from client: %s" % (self.clientMsg))
-            tokens = re.split('|', self.clientMsg)
+            tokens = re.split('\|', self.clientMsg)
             try:
                 self.parseClientMessage(tokens)
             except:
@@ -94,10 +98,10 @@ class ExcelServer(object):
         if (tokens[SubscribeMsgField.msgType.value] == 'R'):
             if (tokens[SubscribeMsgField.msgCategory.value] == 'S'):
                 symbol = tokens[SubscribeMsgField.symbol.value]
-                self.subscribe(clientName, symbol)
+                self.subscribe('', symbol)
             elif (tokens[SubscribeMsgField.msgCategory.value] == 'U'):
                 symbol = tokens[SubscribeMsgField.symbol.value]
-                self.unsubscribe(clientName, symbol)
+                self.unsubscribe('', symbol)
 
 
     def subscribe(self, client, symbol):
