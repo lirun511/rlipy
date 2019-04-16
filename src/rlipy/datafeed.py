@@ -1,4 +1,8 @@
 class Price(object):
+    def __init__(self):
+        self.symbol = ''
+        self.clear()
+        
     def clear(self):
         self.bidPrice = ''
         self.bidSpread = ''
@@ -28,7 +32,7 @@ class Price(object):
              self.flags
              )
     def merge(self, other):
-        for k,v in other.__dict__.iteritems():
+        for k,v in other.__dict__.items():
             self.__setattr__(k, v)
                 
     def __eq__(self, other):
