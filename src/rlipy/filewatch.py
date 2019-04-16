@@ -1,13 +1,13 @@
-import env
+from . import env
 import pandas as pd
 from datetime import datetime
 from datetime import timedelta
 import time
 import re
-import tradedate
+from . import tradedate
 import os
-import htmlmail
-import util
+from . import htmlmail
+from . import util
 import rlipy.logger
 import logging
 
@@ -43,7 +43,7 @@ def alert(s):
     now = datetime.strftime(datetime.now(), '%H:%M:%S')
     if(deadline<=now):
         if(not os.path.isfile(fn) or os.stat(fn).st_size<util.to_int(s['SIZE'])):
-            email = ','.join(map(lambda x: x+'@veritionfund.com', re.split(',', s['EMAIL'])))
+            email = ','.join([x+'@veritionfund.com' for x in re.split(',', s['EMAIL'])])
             msg = 'file: %s\nserver: %s\ncommand: %s' % (fn, s['SERVER'], s['COMMAND'])
             htmlmail.send(to_address=email, subject='file watch alert: missing '+s['DESCRIPTION'], body=msg)
 
@@ -55,7 +55,7 @@ def watch_today(s):
         arr = str.split('|')
         return today_weekday in arr
     except:
-        print "ERROR: failed to parse weekdays: %s" % str
+        print("ERROR: failed to parse weekdays: %s" % str)
     return False
     
 def get_deadline(s):
@@ -64,7 +64,7 @@ def get_deadline(s):
         dl = datetime.strftime(datetime.strptime(s['DEADLINE'], '%H:%M:%S'), '%H:%M:%S' )
         return dl
     except:
-        print "ERROR: failed to get deadline \n%s" % (re.sub(';', '\n', s.to_string()))
+        print("ERROR: failed to get deadline \n%s" % (re.sub(';', '\n', s.to_string())))
         return ''
 if __name__ == '__main__':
     src = env.ROOT_DIR+'/refdata/file_watch.csv'

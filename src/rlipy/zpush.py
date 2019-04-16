@@ -36,7 +36,7 @@ if __name__ == '__main__':
     socket = zpush(zcontext, "tcp://"+args.address)
     use_stdin = False
     if(args.file is not None):
-        print "push messages in  file " + args.file
+        print("push messages in  file " + args.file)
         fh = open(args.file, 'r')
     else:
         fh = sys.stdin
@@ -44,7 +44,7 @@ if __name__ == '__main__':
     time.sleep(1)
     while(True):
         if(use_stdin):
-            msg = raw_input('< ')
+            msg = input('< ')
             if(msg=='quit'):
                 break
         else:
@@ -52,7 +52,7 @@ if __name__ == '__main__':
             if(len(msg)==0):
                 break;
             msg = msg.rstrip()
-        print '> '+msg
+        print('> '+msg)
         socket.send(msg)
     socket.close()   
     

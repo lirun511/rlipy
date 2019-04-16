@@ -32,7 +32,7 @@ class Price(object):
              self.flags
              )
     def merge(self, other):
-        for k,v in other.__dict__.items():
+        for k,v in list(other.__dict__.items()):
             self.__setattr__(k, v)
                 
     def __eq__(self, other):

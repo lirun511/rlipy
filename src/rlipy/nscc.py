@@ -1,9 +1,9 @@
 #!/usr/local/bin/python
 import pandas as pd
-from StringIO import StringIO
+from io import StringIO
 import subprocess
 
-import util
+from . import util
 def nscc_raw_file(trade_date):
 	return '/data/market/bamlnscc/%s_bamlnscc.txt' % (trade_date)
 

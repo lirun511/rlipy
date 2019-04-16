@@ -53,7 +53,7 @@ if __name__ == '__main__':
     while(fd):
         try:
             if(fd==sys.stdin):
-                outMsg = raw_input('< ')
+                outMsg = input('< ')
                 if(outMsg=='quit'):
                     break
             else:
@@ -63,16 +63,16 @@ if __name__ == '__main__':
                 continue
             msg = socket.requestAndReply(outMsg, 60*1000) #timeout in 60 seconds
             if(not msg):
-                print "ERROR: failed to send %s" % msg
+                print("ERROR: failed to send %s" % msg)
                 break;
             msg = msg.rstrip()
-            print '> '+msg
+            print('> '+msg)
         except KeyboardInterrupt:
             break
         except Exception as e:
             exc_type, exc_value, exc_traceback = sys.exc_info()
             msg = str(exc_value)+'\n'+('\n'.join(traceback.format_exc().splitlines()))
-            print "ERROR: %s" % msg
+            print("ERROR: %s" % msg)
     socket.close()   
     zcontext.term()
 

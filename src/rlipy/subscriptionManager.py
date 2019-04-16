@@ -58,14 +58,14 @@ class RedisSubscriptionManager(SubscriptionManager):
         logger.info("%s use redis key %s" % (self.name, self.redisKey))
         subs = self.redis_db.hgetall(self.redisKey)
         stale = []
-        for symbol,subDate in subs.items():
+        for symbol,subDate in list(subs.items()):
             if(subDate<self.today):
                 stale.append(symbol)
         for s in stale:
             #remove stale subscriptions from redis
             del subs[s]
             self.redis_db.hdel(self.redisKey, s)
-        for symbol, subDate in subs.items():
+        for symbol, subDate in list(subs.items()):
             logger.debug("subscription from redis %s", symbol)
             self.addSymbol(symbol, '')
     

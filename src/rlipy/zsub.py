@@ -42,7 +42,7 @@ if __name__ == '__main__':
           if(socket.socket in events and events[socket.socket]==zmq.POLLIN):
              msg = socket.recv()
              if(msg): 
-                 print msg
+                 print(msg)
                  sys.stdout.flush()
         except KeyboardInterrupt:
             break

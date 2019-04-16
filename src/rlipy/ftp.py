@@ -40,7 +40,7 @@ def ftp_to_realtick(localfile, remote_file):
 if __name__ == '__main__':
     local_file = sys.argv[1]
     remote_file = sys.argv[2]
-    print "uploading %s as %s" % (local_file, remote_file)
+    print("uploading %s as %s" % (local_file, remote_file))
     ftp_to_ml(local_file, remote_file)
     
     
