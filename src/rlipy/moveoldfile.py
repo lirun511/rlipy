@@ -3,7 +3,7 @@ Created on May 10, 2018
 
 @author: rli
 '''
-import htmlmail
+from . import htmlmail
 import logging
 import argparse
 from datetime import datetime as dt
@@ -25,7 +25,7 @@ if __name__ == '__main__':
     try:
          age = int(args.age_days)
     except:
-        print "ERROR: failed to parse age_days %s" % (args.age_days)
+        print("ERROR: failed to parse age_days %s" % (args.age_days))
         parser.print_usage()
         exit(-1)
     #old_files = []
@@ -43,7 +43,7 @@ if __name__ == '__main__':
             file_name = os.path.basename(pathname)
             if(file_time<old):
                 if(args.list_only):
-                    print pathname, dt.strftime(file_time,'%Y/%m/%d %H:%M:%S')
+                    print(pathname, dt.strftime(file_time,'%Y/%m/%d %H:%M:%S'))
                 elif(args.delete):
                     shutil.rmtree(pathname)
                     logging.info("deleted %s %s" % (pathname, dt.strftime(file_time,'%Y/%m/%d %H:%M:%S')) )

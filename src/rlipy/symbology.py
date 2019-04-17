@@ -70,5 +70,5 @@ def qaam2nasdaq(s):
 
 
 if __name__ == '__main__':
-    print nasdaq2cqs('BRK.A' )
-    print nasdaq2cqs('WFCpJ' )
+    print(nasdaq2cqs('BRK.A' ))
+    print(nasdaq2cqs('WFCpJ' ))

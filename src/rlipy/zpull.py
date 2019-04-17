@@ -15,7 +15,7 @@ class zpull(object):
     
     def recv(self):
         try:
-            msg = self.socket.recv()
+            msg = self.socket.recv().decode('ascii')
             return msg
         except zmq.Again as e:
             return None
@@ -41,7 +41,7 @@ if __name__ == '__main__':
           events = dict(zpoller.poll(1000))
           if(socket.socket in events and events[socket.socket]==zmq.POLLIN):
              msg = socket.socket.recv()
-             print msg
+             print( msg )
              sys.stdout.flush()
         except KeyboardInterrupt:
             break

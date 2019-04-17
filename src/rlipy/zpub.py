@@ -22,7 +22,7 @@ class zpub(object):
         self.socket.bind(address)
     
     def send(self, msg):
-        self.socket.send(msg)
+        self.socket.send(msg.encode('ascii'))
     
     def close(self):
         self.socket.close()
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     socket = zpub(zcontext, "tcp://"+args.address)
     use_stdin = False
     if(args.file is not None):
-        print "publish file " + args.file
+        print(("publish file " + args.file))
         fh = open(args.file, 'r')
     else:
         fh = sys.stdin
@@ -48,7 +48,7 @@ if __name__ == '__main__':
     time.sleep(1)
     while(True):
         if(use_stdin):
-            msg = raw_input('< ')
+            msg = input('< ')
             if(msg=='quit'):
                 break
         else:
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             if(len(msg)==0):
                 break;
             msg = msg.rstrip()
-        print '> '+msg
+        print(('> '+msg))
         socket.send(msg)
     socket.close()   
     
