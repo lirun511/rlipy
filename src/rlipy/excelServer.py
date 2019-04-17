@@ -55,6 +55,7 @@ class ExcelServer(object):
             self.sentMsgNo, len(self.cache), len(self.subscriptions.getAllSymbols())))
         self.subSocket.close()
         self.pubSocket.close()
+        self.datafeed.shutDown()
         logging.info("server is down")
 
     def run(self):

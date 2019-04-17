@@ -5,6 +5,9 @@ class DataFeedBase(object):
 
     def subscribe(self, symbol):
         raise NotImplementedError
+    
+    def getUpdates(self):
+        raise NotImplementedError
 
-    def unsubscribe(self, symbol):
+    def shutDown(self):
         raise NotImplementedError
