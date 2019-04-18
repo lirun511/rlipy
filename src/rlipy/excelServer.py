@@ -132,7 +132,7 @@ class ExcelServer(object):
             self.onData(update)
 
     def onData(self, data):
-        #logging.debug("onData %s" % (str(data)))
+        logging.debug("onData %s" % (str(data)))
         old = self.cache[data.symbol] if data.symbol in self.cache else None
         sameData = (old!=None and old==data)
         if(old is None):

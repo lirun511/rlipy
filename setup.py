@@ -10,7 +10,7 @@ from os.path import join
 from os.path import splitext
 setup(
     name='rlipy',
-    version='0.2.2',
+    version='0.2.4',
     packages=find_packages('src'),
     package_dir={'': 'src'},
     py_modules=[splitext(basename(path))[0] for path in glob('src/*.py')],    

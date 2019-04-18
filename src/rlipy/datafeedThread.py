@@ -21,7 +21,9 @@ class DataFeedThread(datafeed.DataFeedBase):
     def getUpdates(self):
         updates = []
         try:
-            updates.append(self.updateQueue.get_nowait())
+            u = self.updateQueue.get_nowait()
+            logging.debug("update %s", u)
+            updates.append(u)
         except Empty:
             pass
         return updates

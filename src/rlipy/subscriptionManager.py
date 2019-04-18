@@ -1,6 +1,7 @@
 import datetime
 import redis
 import logging
+from . import logger
 logger = logging.getLogger(__name__)
 class SubscriptionManager(object):
     def __init__(self):
@@ -42,6 +43,18 @@ class SubscriptionManager(object):
             
 
 class RedisSubscriptionManager(SubscriptionManager):
+
+    def getTodaySubAndRemoveStaleFromRedis(self):
+        subs = self.redis_db.hgetall(self.redisKey)
+        stale = []
+        for symbol, subDate in list(subs.items()):
+            if (subDate < self.today):
+                stale.append(symbol)
+        for s in stale: #remove stale subscriptions from redis
+            del subs[s]
+            self.redis_db.hdel(self.redisKey, s)
+        return  subs
+
     def __init__(self,  name, redisHost, redisPort):
         super(RedisSubscriptionManager, self).__init__()
         self.name = name
@@ -56,19 +69,12 @@ class RedisSubscriptionManager(SubscriptionManager):
             raise
         self.redisKey = "PRICEFEED:"+name+":SUB"
         logger.info("%s use redis key %s" % (self.name, self.redisKey))
-        subs = self.redis_db.hgetall(self.redisKey)
-        stale = []
-        for symbol,subDate in list(subs.items()):
-            if(subDate<self.today):
-                stale.append(symbol)
-        for s in stale:
-            #remove stale subscriptions from redis
-            del subs[s]
-            self.redis_db.hdel(self.redisKey, s)
+        subs = self.getTodaySubAndRemoveStaleFromRedis()
         for symbol, subDate in list(subs.items()):
-            logger.debug("subscription from redis %s", symbol)
-            self.addSymbol(symbol, '')
-    
+            #logger.debug("subscription from redis %s", symbol)
+            super(RedisSubscriptionManager, self).addSymbol(symbol, '')
+        logger.info("loaded %d symbols", len(self.symbol2Clients))
+        
     def addSymbol(self, symbol, client):
         existing = self.hasSymbol(symbol)
         super(RedisSubscriptionManager, self).addSymbol(symbol, client)
