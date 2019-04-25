@@ -51,11 +51,12 @@ class DataFeedThread(datafeed.DataFeedBase):
             try:
                 self.processSubscribes()
                 updates = self.datafeedImpl.getUpdates()
-                logging.info("received %d updates", len(updates))
                 for u in updates:
                     self.updateQueue.put(u)
                     logging.debug("update %s", u)
                     self.recvUpdateCount += 1
+                if(updates):
+                    logging.debug("recv update %d sent %d", self.recvUpdateCount, self.sendUpdateCount)
             except :
                 logging.error("DataFeedThread main loop error", exc_info = True)
-            logging.debug("recv update %d sent %d", self.recvUpdateCount, self.sendUpdateCount)
+
