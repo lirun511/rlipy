@@ -3,25 +3,23 @@ Created on Nov 4, 2016
 
 @author: rli
 '''
-import sys
-import os
 from datetime import datetime
-BBQ_HOST               = 'rli02-w7'
-BBQ_PORT               = '7200'
-BBQ_PORT_2             = '5555'
-BBQ_PORT_3             = '5555'
+import os
+import sys
 
-IS_WINDOWS = sys.platform.find('win')==0
+BBQ_HOST = 'rli02-w7'
+BBQ_PORT = '7200'
+BBQ_PORT_2 = '5555'
+BBQ_PORT_3 = '5555'
+
+IS_WINDOWS = sys.platform.find('win') == 0
 if(IS_WINDOWS):
     DATA_DIR = 'R:'
 else:
     DATA_DIR = '/data'
-if('PYTHONTEST' in os.environ and os.environ['PYTHONTEST']=='1'):
-    DATA_DIR = DATA_DIR+'/common/rli/testdata'
+ROOT_DIR = os.path.join(DATA_DIR, 'prod', 'infra')
+SECMAST_DIR = os.path.join(ROOT_DIR, 'secmast')
 
-ROOT_DIR = DATA_DIR+'/prod/infra'
-SECMAST_DIR = ROOT_DIR+'/secmast'
-
-
-HMA_DAILY_DIR = DATA_DIR+'/prod/hma/daily'
-HMA_TODAY_DIR = HMA_DAILY_DIR + '/' + datetime.strftime(datetime.now(), '%Y%m%d')    
+HMA_DAILY_DIR = os.path.join(DATA_DIR, 'prod', 'hma', 'daily')
+HMA_TODAY_DIR = os.path.join(HMA_DAILY_DIR, datetime.strftime(datetime.now(), '%Y%m%d'))
+HMA_TODAY_LINK = os.path.join(HMA_DAILY_DIR, 'today')
