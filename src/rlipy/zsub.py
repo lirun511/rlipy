@@ -1,8 +1,12 @@
-import zmq
 import argparse
-import time
 import sys
+import time
+
+import zmq
+
+
 class zsub(object):
+
     def __init__(self, context, address):
         self.context = context
         self.socket = self.context.socket(zmq.SUB)
@@ -10,38 +14,39 @@ class zsub(object):
         self.socket.setsockopt(zmq.RCVTIMEO, 0)
         self.socket.setsockopt(zmq.LINGER, 1000)
         self.socket.setsockopt(zmq.RCVHWM, 0)
-        self.socket.setsockopt(zmq.SUBSCRIBE, '')
+        self.socket.setsockopt(zmq.SUBSCRIBE, ''.encode('ascii'))
         self.address = address
-        self.socket.connect(address)
-    
+        self.socket.connect(self.address)
+
     def recv(self):
         try:
             msg = self.socket.recv()
-            return msg.decode('ascii')
+            return msg
         except zmq.Again as e:
             return None
-        
+
     def close(self):
         self.socket.close()
-        
+
     def __del__(self):
         self.close()
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument(dest="address", type=str, help='zmq subscribe address')
+    parser.add_argument(dest = "address", type = str, help = 'zmq subscribe address')
 
     args = parser.parse_args()
     zcontext = zmq.Context()
-    socket = zsub(zcontext, "tcp://"+args.address)
+    socket = zsub(zcontext, "tcp://" + args.address)
     zpoller = zmq.Poller()
     zpoller.register(socket.socket, zmq.POLLIN)
     while(True):
         try:
           events = dict(zpoller.poll(1000))
-          if(socket.socket in events and events[socket.socket]==zmq.POLLIN):
+          if(socket.socket in events and events[socket.socket] == zmq.POLLIN):
              msg = socket.recv()
-             if(msg): 
+             if(msg):
                  print(msg)
                  sys.stdout.flush()
         except KeyboardInterrupt:
@@ -49,7 +54,6 @@ if __name__ == '__main__':
         except:
             break
 
-    socket.close()   
+    socket.close()
     zcontext.term()
 
-    
