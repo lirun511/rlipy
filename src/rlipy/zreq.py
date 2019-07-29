@@ -47,10 +47,6 @@ class zreq():
         self.close()
 
 
-if __name__ == '__main__':
-    main()
-
-
 def main():
     args = parseArg()
     fd = sys.stdin
@@ -85,3 +81,6 @@ def main():
     socket.close()
     zcontext.term()
 
+
+if __name__ == '__main__':
+    main()

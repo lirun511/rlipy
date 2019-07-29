@@ -80,7 +80,7 @@ COMPONENT_FORMAT = pd.DataFrame(
 
 
 def get_nscc_basket(raw_file):
-	buf = subprocess.check_output('egrep "^02" ' + raw_file, shell = True).decode("ascii")
+	buf = subprocess.check_output('egrep "^02" ' + raw_file, shell = True).decode('UTF-8', errors = 'ignore')
 	baskets = pd.read_fwf(StringIO(buf), widths = HEADER_FORMAT['LEN'].tolist(),
 						names = HEADER_FORMAT['NAME'].tolist())
 	baskets['est_t-1_cash_amt_per_cu'] = baskets['est_t-1_cash_amt_per_cu'] * 0.01 * (baskets['sign_est_t-1_cash_amt_per_cu'].apply(lambda x:-1 if x == '-' else 1))
@@ -120,7 +120,7 @@ def __get_cusip(s):
 
 
 def get_nscc_component(raw_file):
-	buf = subprocess.check_output('egrep "^03" ' + raw_file, shell = True).decode("ascii")
+	buf = subprocess.check_output('egrep "^03" ' + raw_file , shell = True).decode('UTF-8', errors = 'ignore')
 	components = pd.read_fwf(StringIO(buf),
 							widths = COMPONENT_FORMAT['LEN'].tolist(),
 							names = COMPONENT_FORMAT['NAME'].tolist(),
