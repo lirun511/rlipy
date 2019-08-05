@@ -1,9 +1,7 @@
-class Price(object):
+class Price():
+
     def __init__(self):
         self.symbol = ''
-        self.clear()
-        
-    def clear(self):
         self.bidPrice = ''
         self.bidSpread = ''
         self.benchmark = ''
@@ -12,8 +10,7 @@ class Price(object):
         self.benchmark = ''
         self.time = ''
         self.flags = ''
-        return self
-        
+
     def invalidatePrice(self):
         self.bidPrice = ''
         self.bidSpread = ''
@@ -22,7 +19,7 @@ class Price(object):
         self.askSpread = ''
         self.benchmark = ''
         return self
-        
+
     def __str__(self):
         # 4 stand of IDSource ISIN
         return  '%s|%s|%s|%s|4|%s|%s|%s|4|%s|%s' % (self.symbol,
@@ -31,10 +28,11 @@ class Price(object):
              self.time,
              self.flags
              )
+
     def merge(self, other):
-        for k,v in list(other.__dict__.items()):
+        for k, v in list(other.__dict__.items()):
             self.__setattr__(k, v)
-                
+
     def __eq__(self, other):
         if(other == None): return False
         return self.__dict__ == other.__dict__

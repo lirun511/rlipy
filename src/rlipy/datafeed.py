@@ -1,6 +1,6 @@
 
 
-class DataFeedBase(object):
+class DataFeedBase():
 
     def subscribe(self, symbol):
         raise NotImplementedError
