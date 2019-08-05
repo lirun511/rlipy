@@ -61,7 +61,7 @@ class ExcelServer:
         logging.info("server is down")
 
     def run(self):
-        logging.info("starting excelserver")
+        logging.debug("starting excelserver")
         self.getSnapshotForYesterdaySymbols()
         self.loop()
 

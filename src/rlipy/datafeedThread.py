@@ -56,7 +56,7 @@ class DataFeedThread(datafeed.DataFeedBase):
                     logging.debug("update %s", u)
                     self.recvUpdateCount += 1
                 if(updates):
-                    logging.debug("recv update %d sent %d", self.recvUpdateCount, self.sendUpdateCount)
+                    logging.info("recv update %d sent %d", self.recvUpdateCount, self.sendUpdateCount)
             except :
                 logging.error("DataFeedThread main loop error", exc_info = True)
 

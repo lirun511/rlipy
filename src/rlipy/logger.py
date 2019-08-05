@@ -24,7 +24,11 @@ def getLogFile():
     return log_file
 
 
-def init(pathName = getLogFile(), logLevel = logging.DEBUG):
+def init(pathName = getLogFile(), debugOn = False):
+    if debugOn:
+        logLevel = logging.DEBUG
+    else:
+        logLevel = logging.INFO
     logging.basicConfig(filename = pathName, level = logLevel,
                         format = '%(asctime)s.%(msecs)d %(levelname)-5s [%(pathname)s:%(lineno)d] %(message)s',
                         datefmt = '%H:%M:%S')
