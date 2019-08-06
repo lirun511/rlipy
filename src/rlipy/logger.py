@@ -24,7 +24,7 @@ def getLogFile():
     return log_file
 
 
-def init(pathName = getLogFile(), debugOn = False):
+def init(pathName = getLogFile(), debugOn = True):
     if debugOn:
         logLevel = logging.DEBUG
     else:
