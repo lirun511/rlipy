@@ -20,7 +20,7 @@ class zsub(object):
 
     def recv(self):
         try:
-            msg = self.socket.recv().decode('ascii')
+            msg = self.socket.recv()
             return msg
         except zmq.Again as e:
             return None
