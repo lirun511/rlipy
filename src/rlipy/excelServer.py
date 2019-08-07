@@ -74,9 +74,12 @@ class ExcelServer:
 
     def loop(self):
         while datetime.now() < self.endTime:
-            self.pollClients()
-            self.pollPriceFeeds()
-            self.sleepIfNoNewData()
+            try:
+                self.pollClients()
+                self.pollPriceFeeds()
+                self.sleepIfNoNewData()
+            except:
+                logging.error("main loop fails", exe_info = True)
 
     def pollClients(self):
         self.clientMsg = self.subSocket.recv()
