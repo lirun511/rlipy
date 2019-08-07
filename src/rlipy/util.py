@@ -3,7 +3,6 @@ Created on Nov 9, 2016
 
 @author: rli
 '''
-from rlipy.env import  HMA_TODAY_DIR, HMA_TODAY_LINK
 import datetime
 import logging
 import os
@@ -11,6 +10,8 @@ import re
 import subprocess
 import time
 import uuid
+import pytz
+from rlipy.env import  HMA_TODAY_DIR, HMA_TODAY_LINK
 import pandas as pd
 
 
@@ -81,19 +82,12 @@ def pandas_run(cmd_and_arg, sep = ' ', header = None):
 
 
 def tzdiff(timeZoneName):
-    cur = time.time()
-    myTime = time.localtime(cur)
-    orig = os.environ["TZ"] if 'TZ' in os.environ else None
-    os.environ["TZ"] = timeZoneName
-    tzTime = time.localtime(cur)
-    if(orig == None) :
-        del os.environ["TZ"]
-    else:
-        os.environ["TZ"] = orig
-
-    delta = (datetime.datetime(tzTime.tm_year, tzTime.tm_mon, tzTime.tm_mday, tzTime.tm_hour, tzTime.tm_min, tzTime.tm_sec) -
-            datetime.datetime(myTime.tm_year, myTime.tm_mon, myTime.tm_mday, myTime.tm_hour, myTime.tm_min, myTime.tm_sec))
-    return delta
+    localTz = pytz.timezone("America/New_York")
+    otherTz = pytz.timezone(timeZoneName)
+    t = datetime.datetime(2019, 8, 7, 11, 0)
+    localHour = t.astimezone(localTz).hour
+    otherHour = t.astimezone(otherTz).hour
+    return datetime.timedelta(0, (otherHour - localHour) * 3600)
 
 
 def make_link(src, link):
