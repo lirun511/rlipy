@@ -18,18 +18,19 @@ def getLogDir():
 
 def getLogFile():
     if('__file__' in __main__.__dict__):
-        log_file = os.path.join(getLogDir(), os.path.splitext(os.path.basename(__main__.__file__))[0] + '.log')
+        log_file = os.path.splitext(os.path.basename(__main__.__file__))[0] + '.log'
     else:
-        log_file = os.path.join(getLogDir(), 'python.log')
+        log_file = 'python.log'
     return log_file
 
 
-def init(pathName = getLogFile(), debugOn = True):
+def init(logDir = getLogDir(), logFile = getLogFile(), debugOn = True):
+    logFile = os.path.join(logDir, logFile)
     if debugOn:
         logLevel = logging.DEBUG
     else:
         logLevel = logging.INFO
-    logging.basicConfig(filename = pathName, level = logLevel,
+    logging.basicConfig(filename = logFile, level = logLevel,
                         format = '%(asctime)s.%(msecs)d %(levelname)-5s [%(pathname)s:%(lineno)d] %(message)s',
                         datefmt = '%H:%M:%S')
 
