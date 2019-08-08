@@ -73,13 +73,17 @@ class ExcelServer:
             self.onData(update)
 
     def loop(self):
+        logging.info("start looping")
         while datetime.now() < self.endTime:
             try:
                 self.pollClients()
                 self.pollPriceFeeds()
                 self.sleepIfNoNewData()
+            except KeyboardInterrupt:
+                logging.info("KeyboardInterrupt. exiting...")
+                break
             except:
-                logging.error("main loop fails", exe_info = True)
+                logging.error("main loop fails", exc_info = True)
 
     def pollClients(self):
         self.clientMsg = self.subSocket.recv()
