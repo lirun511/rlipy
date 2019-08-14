@@ -21,7 +21,7 @@ class zpush(object):
         self.socket.connect(address)
 
     def send(self, msg):
-        self.socket.send(msg.encode('ascii'))
+        self.socket.send(msg)
 
     def close(self):
         self.close()
