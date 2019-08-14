@@ -1,0 +1,38 @@
+﻿syntax = "proto3";
+package Core;
+import "google/protobuf/timestamp.proto";
+message StringField {
+	string fieldName =1;
+	string data = 2;
+}
+
+message IntField {
+	string fieldName =1;
+	int64 data = 2;
+}
+
+message DoubleField {
+	string fieldName =1;
+	double data = 2;
+}
+
+message TimeField {
+	string fieldName =1;
+	google.protobuf.Timestamp data = 2;
+}
+
+enum FieldType {
+	StringType = 0;
+	IntType = 1;
+	DoubleType =2;
+	TimeType = 3;
+	Unknown = 100;
+}
+
+message SymDataProto {
+	string symbol = 1;
+	repeated StringField stringFields = 2;
+	repeated IntField intFields = 3;
+	repeated DoubleField doubleFields = 4;
+	repeated TimeField timeFields = 5;
+}
