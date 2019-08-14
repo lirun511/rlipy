@@ -32,6 +32,15 @@ class zreq():
         self.reset()
         return ""
 
+    def requestAndReplyBinary(self, outMsg, timeout):
+        self.socket.send(outMsg)
+        events = dict(self.zpoller.poll(timeout))
+        if(self.socket in events and events[self.socket] == zmq.POLLIN):
+            msg = self.socket.recv()
+            return msg
+        self.reset()
+        return ""
+
     def reset(self):
         self.zpoller.unregister(self.socket)
         self.socket.close()
