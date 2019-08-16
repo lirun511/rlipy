@@ -86,8 +86,9 @@ class ExcelServer:
                 logging.error("main loop fails", exc_info = True)
 
     def pollClients(self):
-        self.clientMsg = self.subSocket.recv().decode('ascii')
+        self.clientMsg = self.subSocket.recv()
         while(self.clientMsg):
+            self.clientMsg = self.clientMsg.decode('ascii')
             logging.debug("recv msg from client: %s", self.clientMsg)
             try:
                 tokens = re.split(r'\|', self.clientMsg)
