@@ -26,7 +26,7 @@ class zpub(object):
         self.socket.bind(address)
 
     def send(self, msg):
-        self.socket.send(msg.encode('ascii'))
+        self.socket.send(msg)
 
     def close(self):
         self.socket.close()
@@ -62,5 +62,5 @@ if __name__ == '__main__':
                 break;
             msg = msg.rstrip()
         print(('> ' + msg))
-        socket.send(msg)
+        socket.send(msg.encode('ascii'))
     socket.close()

@@ -57,6 +57,6 @@ if __name__ == '__main__':
                 break;
             msg = msg.rstrip()
         print('> ' + msg)
-        socket.send(msg)
+        socket.send(msg.encode('ascii'))
     socket.close()
 

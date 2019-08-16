@@ -86,7 +86,7 @@ class ExcelServer:
                 logging.error("main loop fails", exc_info = True)
 
     def pollClients(self):
-        self.clientMsg = self.subSocket.recv()
+        self.clientMsg = self.subSocket.recv().decode('ascii')
         while(self.clientMsg):
             logging.debug("recv msg from client: %s", self.clientMsg)
             try:
@@ -116,7 +116,7 @@ class ExcelServer:
         self.subscriptions.addSymbol(symbol, client)
 
     def publishData(self, data):
-        self.pubSocket.send('M|U|' + str(data))
+        self.pubSocket.send(('M|U|' + str(data)).encode('ascii'))
         self.sentMsgNo += 1
 
     def subscribeToDataFeed(self, symbol):
